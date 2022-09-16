@@ -1,0 +1,32 @@
+#amazon-float {
+    float: right;
+    margin-top: 10px;
+    width: 75%;
+}
+
+#river-float {
+    height: 350px;
+}
+
+#animals-info-float {
+    margin-top: 30px;
+}
+
+
+.container {
+    display: flex;
+    align-items: stretch;
+}
+
+#river-flex {
+    height: 350px;
+}
+
+#amazon-flex {
+    width: 75%;
+    margin-top: 30px;
+}
+
+h1 {
+    text-align: center;
+}
