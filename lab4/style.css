@@ -1,0 +1,14 @@
+#colored_element1 {
+    background-color:chartreuse;
+    color: #8a2be2;
+}
+
+#colored_element2 {
+    background-color: #a52a2a;
+    color:aquamarine;
+}
+
+button {
+    height: 40px;
+    margin-bottom: 20px;
+}
