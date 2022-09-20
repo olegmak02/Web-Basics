@@ -27,14 +27,14 @@ td, th {
     background-color: #738f8f;
 }
 
-.draw {
+#draw-pos {
     margin-left: auto;
     margin-right: auto;
     width: 400px;
     height: 400px;
 }
 
-.blue-square {
+#blue-square-pos {
     position: relative;
     top: 20%;
     left: 40%;
@@ -46,7 +46,7 @@ td, th {
     border-radius: 20px;
 }
 
-.yellow-square {
+#yellow-square-pos {
     position: relative;
     top: 19%;
     left: 24%;
@@ -58,7 +58,7 @@ td, th {
     border-radius: 20px;
 }
 
-.pink-square {
+#pink-square-pos {
     position: relative;
     top: -7%;
     left: 56%;
@@ -67,5 +67,47 @@ td, th {
     border: 2px solid black;
     background-color: rgb(204, 0, 102);
     transform: rotate(75deg);
+    border-radius: 20px;
+}
+
+
+
+#draw-trans {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    height: 400px;
+}
+
+#blue-square-trans {
+    top: 20%;
+    left: 40%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    background-color: rgb(184, 204, 228);
+    transform: translate(160px, 10px) rotate(45deg);
+    border-radius: 20px;
+}
+
+#yellow-square-trans {
+    top: 19%;
+    left: 24%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    background-color: rgb(255, 255, 0);
+    transform: translate(95px, 5px) rotate(15deg);
+    border-radius: 20px;
+}
+
+#pink-square-trans {
+    top: -7%;
+    left: 56%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid black;
+    background-color: rgb(204, 0, 102);
+    transform: translate(225px, -100px) rotate(75deg);
     border-radius: 20px;
 }
