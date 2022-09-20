@@ -1,5 +1,5 @@
 table {
-    width: 600px;
+    width: 100%;
     height: 200px;
     border-collapse: collapse;
 }
@@ -28,6 +28,8 @@ td, th {
 }
 
 .draw {
+    margin-left: auto;
+    margin-right: auto;
     width: 400px;
     height: 400px;
 }
