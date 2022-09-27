@@ -5,7 +5,7 @@
 }
 
 #river-float {
-    height: 350px;
+    width: 100%;
 }
 
 #animals-info-float {
@@ -19,7 +19,12 @@
 }
 
 #river-flex {
-    height: 350px;
+    width: 100%;
+}
+
+#amazon-info-flex {
+    margin-top: 30px;
+    width: 25%;
 }
 
 #amazon-flex {

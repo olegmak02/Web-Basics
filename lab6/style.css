@@ -1,4 +1,19 @@
 button {
-    width: 30%;
+    width: 40%;
+    height: 30px;
     margin-left: 35%;
+    margin-bottom: 5%;
+}
+
+#info {
+    display: flex;
+    width: 100%;
+    background-color: slategray;
+}
+
+div {
+    width: 20%;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
 }

@@ -1,36 +1,36 @@
 const download_button = document.getElementById("download_button");
 
 function clickHandler(event) {
-    const human_info = fetch("https://randomuser.me/api")
+    fetch("https://randomuser.me/api/?results=5")
         .then((data) => data.json())
         .then((data) => {
             console.log(data);
-            const info = document.getElementById("info");
-            info.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                let person = document.querySelector("#info").children[i];
+                person.innerHTML = '';
 
-            const photo = document.createElement("img");
-            photo.src = data.results[0].picture.large;
-            photo.style.marginLeft = "30%";
-            console.log(data.results);
-            info.appendChild(photo);
+                const photo = document.createElement("img");
+                photo.src = data.results[i].picture.large;
+                person.appendChild(photo);
 
-            const phone = document.createElement("p");
-            phone.innerText = data.results[0].phone;
-            info.appendChild(phone);
+                const phone = document.createElement("p");
+                phone.innerText = "Телефон: " + data.results[i].phone;
+                person.appendChild(phone);
 
-            const coordinates = document.createElement("p");
-            coordinates.innerText = "широта: " + data.results[0].location.coordinates.latitude + 
-                "довгота: " + data.results[0].location.coordinates.longitude;
+                const coordinates = document.createElement("p");
+                coordinates.innerText = "Координати:\nШирота: " + data.results[i].location.coordinates.latitude + 
+                    "\nДовгота: " + data.results[i].location.coordinates.longitude;
+                person.appendChild(coordinates);
 
-            info.appendChild(coordinates);
+                const postcode = document.createElement("p");
+                postcode.innerText = "Поштовий код: " + data.results[i].location.postcode;
+                person.appendChild(postcode);
 
-            const postcode = document.createElement("p");
-            postcode.innerText = data.results[0].location.postcode;
-            info.appendChild(postcode);
-
-            const country = document.createElement("p");
-            country.innerText = data.results[0].location.country;
-            info.appendChild(country);
+                const country = document.createElement("p");
+                country.innerText = "Країна: " + data.results[i].location.country;
+                person.appendChild(country);
+            }
+            
         });
 }
 
