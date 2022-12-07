@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Макарицький О. І. ІП-94 Лабораторна робота 5 Варіант 73</title>
+    </head>
+    <body>
+        <button type="button" id="back">Повернутись</button>
+        <form>
+            <h1>Форма для заповнення</h1>
+            <input style="margin-top: 50px;" type="text" id="name" placeholder="ПІБ"></input>
+            <input style="margin-top: 20px;" type="text" id="group" placeholder="Група"></input>
+            <input style="margin-top: 20px;" type="text" id="phone" placeholder="Телефон"></input>
+            <input style="margin-top: 20px;" type="text" id="faculty" placeholder="Факультет"></input>
+            <input style="margin-top: 20px;" type="text" id="address" placeholder="Адреса"></input>
+            <input style="margin-top: 20px;" type="text" id="login" placeholder="Логін"></input>
+            <input style="margin-top: 20px;" type="text" id="password" placeholder="Пароль"></input>
+            <button style="margin-top: 20px;" type="button" id="submit">Ввести дані</button>
+        </form>
+
+        <div id="error" style="color: red;"></div>
+
+        <script>
+            async function onClickHandler() {
+                let name = document.getElementById("name").value;
+                let group = document.getElementById("group").value;
+                let phone = document.getElementById("phone").value;
+                let faculty = document.getElementById("faculty").value;
+                let address = document.getElementById("address").value;
+                let login = document.getElementById("login").value;
+                let password = document.getElementById("password").value;
+
+                let name_check = /[А-яІіЇїЄє]{1,} [А-яІіЇїЄє]\.[А-яІіЇїЄє]\./.test(name);
+                let group_check = /[А-яІіЇїЄє]{2}-\d{2}/.test(group);
+                let phone_check = /\(\d{3}\)-\d{3}-\d{2}-\d{2}/.test(phone);
+                let faculty_check = /[А-яІіЇїЄє]{2,4}/.test(faculty);
+                let address_check = /м. [А-яІіЇїЄє]{2,}/.test(address);
+                let login_check = /.+/.test(login);
+                let password_check = /.{5,20}/.test(password);
+
+                let message = "Некоректне заповнення форми\n";
+
+                if (!name_check) {
+                    document.getElementById("name").style.borderColor = "red";
+                    message += "Форма для заповення ПІБ: ТТТТТТ Т.Т.\n";
+                } else {
+                    document.getElementById("name").style.borderColor = "green";
+                }
+
+                if (!group_check) {
+                    document.getElementById("group").style.borderColor = "red";
+                    message += "Форма для заповення групи: ТТ-ЧЧ\n";
+                } else {
+                    document.getElementById("group").style.borderColor = "green";
+                }
+    
+                if (!phone_check) {
+                    document.getElementById("phone").style.borderColor = "red";
+                    message += "Форма для заповення телефону: (ЧЧЧ)-ЧЧЧ-ЧЧ-ЧЧ\n";
+                } else {
+                    document.getElementById("phone").style.borderColor = "green";
+                }
+    
+                if (!faculty_check) {
+                    document.getElementById("faculty").style.borderColor = "red";
+                    message += "Форма для заповення факультета: ТТТТ\n";
+                } else {
+                    document.getElementById("faculty").style.borderColor = "green";
+                }
+
+                if (!address_check) {
+                    document.getElementById("address").style.borderColor = "red";
+                    message += "Форма для заповення адреси: м. ТТТТТТ\n";
+                } else {
+                    document.getElementById("address").style.borderColor = "green";
+                }
+
+                if (!login_check) {
+                    document.getElementById("login").style.borderColor = "red";
+                    message += "Форма для заповення логіну: будь-які символи, більше одного\n";
+                } else {
+                    document.getElementById("login").style.borderColor = "green";
+                }
+
+                if (!password_check) {
+                    document.getElementById("password").style.borderColor = "red";
+                    message += "Форма для заповення паролю: будь-які символи, від 5 до 20\n";
+                } else {
+                    document.getElementById("password").style.borderColor = "green";
+                }
+
+                if (name_check && group_check && phone_check && faculty_check && address_check && login_check && password_check) {
+                    await fetch("/registration", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({name, group, phone, faculty, address, login, password}),
+                    })
+                    .then(async d => {
+                        if (d.status != 200) {
+                            const error_message = document.getElementById("error");
+                            error_message.innerHTML = "Неможливо створити користувача. Спробуйте змінити логін і повторити спробу";
+                            error_message.style.marginTop = "70px";
+                            error_message.style.color = "red";
+                            return;
+                        }
+                        location.href = "/home";
+                    });
+                } else {
+                    message += "де Т-символ, Ч-число";
+                    alert(message);
+                }
+            }
+            document.getElementById("back").addEventListener("click", (e) => {
+                location.href = "/login";
+            });
+            document.getElementById("submit").addEventListener("click", onClickHandler);
+        </script>
+    </body>
+    <style>
+        form {
+            margin-left: 30%;
+            text-align: center;
+            align-content: center;
+            display:grid;
+            align-self: middle;
+            width: 40%;
+        };
+        button {
+            margin-top: 5%;
+            margin-left: 40%;
+            width: 20%;
+        };
+        h1 {
+
+        };
+    </style>
+</html>

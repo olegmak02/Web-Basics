@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Редагування даних користувача</title>
+    </head>
+    <body>
+        <form>
+            <h1>Форма для редагування статуса</h1>
+            <input style="margin-top: 50px;" type="text" id="name" placeholder="ПІБ"></input>
+            <input style="margin-top: 20px;" type="text" id="group" placeholder="Група"></input>
+            <input style="margin-top: 20px;" type="text" id="phone" placeholder="Телефон"></input>
+            <input style="margin-top: 20px;" type="text" id="faculty" placeholder="Факультет"></input>
+            <input style="margin-top: 20px;" type="text" id="address" placeholder="Адреса"></input>
+            <input style="margin-top: 20px;" type="text" id="login" placeholder="Логін"></input>
+            <input style="margin-top: 20px;" type="text" id="password" placeholder="Пароль"></input>
+            <button style="margin-top: 20px;" type="button" id="edit_button">Змінити дані</button>
+        </form>
+        <div id="error" style="color: red;"></div>
+    </body>
+    <style>
+        form {
+            margin-left: 30%;
+            text-align: center;
+            align-content: center;
+            display:grid;
+            align-self: middle;
+            width: 40%;
+        };
+        button {
+            margin-top: 5%;
+            margin-left: 40%;
+            width: 20%;
+        };
+        h1 {
+
+        };
+    </style>
+    <script>
+        const name = document.getElementById("name");
+        const group = document.getElementById("group");
+        const phone = document.getElementById("phone");
+        const faculty = document.getElementById("faculty");
+        const address = document.getElementById("address");
+        const login = document.getElementById("login");
+        const password = document.getElementById("password");
+        
+        const error = document.getElementById("error");
+
+        fetch("/user", {
+            method: "GET"
+        })
+        .then(async res => {
+            const data = await res.json();
+
+            name.value = data.user.name;
+            group.value = data.user.group_name;
+            phone.value = data.user.phone;
+            faculty.value = data.user.faculty;
+            address.value = data.user.address;
+            login.value = data.user.login;
+        });
+
+        const button = document.getElementById("edit_button");
+        button.addEventListener("click", function(req, res) {
+            let name_check = /[А-яІіЇїЄє]{1,} [А-яІіЇїЄє]\.[А-яІіЇїЄє]\./.test(name.value);
+            let group_check = /[А-яІіЇїЄє]{2}-\d{2}/.test(group.value);
+            let phone_check = /\(\d{3}\)-\d{3}-\d{2}-\d{2}/.test(phone.value);
+            let faculty_check = /[А-яІіЇїЄє]{2,4}/.test(faculty.value);
+            let address_check = /м. [А-яІіЇїЄє]{2,}/.test(address.value);
+            let login_check = /.+/.test(login.value);
+            let password_check = password.value ? /.{5,20}/.test(password.value) : true;
+            
+            let message = "Некоректне заповнення форми\n";
+
+            if (!name_check) {
+                document.getElementById("name").style.borderColor = "red";
+                message += "Форма для заповення ПІБ: ТТТТТТ Т.Т.\n";
+            } else {
+                document.getElementById("name").style.borderColor = "green";
+            }
+
+            if (!group_check) {
+                document.getElementById("group").style.borderColor = "red";
+                message += "Форма для заповення групи: ТТ-ЧЧ\n";
+            } else {
+                document.getElementById("group").style.borderColor = "green";
+            }
+
+            if (!phone_check) {
+                document.getElementById("phone").style.borderColor = "red";
+                message += "Форма для заповення телефону: (ЧЧЧ)-ЧЧЧ-ЧЧ-ЧЧ\n";
+            } else {
+                document.getElementById("phone").style.borderColor = "green";
+            }
+
+            if (!faculty_check) {
+                document.getElementById("faculty").style.borderColor = "red";
+                message += "Форма для заповення факультета: ТТТТ\n";
+            } else {
+                document.getElementById("faculty").style.borderColor = "green";
+            }
+
+            if (!address_check) {
+                document.getElementById("address").style.borderColor = "red";
+                message += "Форма для заповення адреси: м. ТТТТТТ\n";
+            } else {
+                document.getElementById("address").style.borderColor = "green";
+            }
+
+            if (!login_check) {
+                document.getElementById("login").style.borderColor = "red";
+                message += "Форма для заповення логіну: будь-які символи, більше одного\n";
+            } else {
+                document.getElementById("login").style.borderColor = "green";
+            }
+
+            if (!password_check) {
+                document.getElementById("password").style.borderColor = "red";
+                message += "Форма для заповення паролю: будь-які символи, від 5 до 20\n";
+            } else {
+                document.getElementById("password").style.borderColor = "green";
+            }
+
+            if (name_check && group_check && phone_check && faculty_check && address_check && login_check && password_check) {
+                fetch("/edit", {
+                    method: "PATCH",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({name: name.value, group: group.value, phone: phone.value, faculty: faculty.value, address: address.value, login: login.value, password: password.value}),
+                })
+                .then(async res => {
+                    if (res.status == 200) {
+                        location.href = "/home";
+                    } else if (res.status == 400) {
+                        alert("Користувач з даним логіном вже існує, змініть його та спробуйте ще раз");
+                    } else {
+                        location.href = "/login";
+                    }
+                });
+            } else {
+                alert(message);
+            }
+        });
+    </script>
+</html>

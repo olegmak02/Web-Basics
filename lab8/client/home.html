@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+    <head>
+        <title>USER PAGE</title>
+    </head>
+    <body>
+        <div id="status">
+            
+        </div>
+        <button id="logout">Вийти</button>
+        <button id="edit">Редагувати статус</button>
+    </body>
+    <script>
+        fetch("/user", {
+            method: 'GET'
+        })
+        .then(async res => {
+            const data = await res.json();
+            const isAdmin = data.user.privilege;
+            const field0 = document.createElement("h3");
+            const field1 = document.createElement("h3");
+            const field2 = document.createElement("h3");
+            const field3 = document.createElement("h3");
+            const field4 = document.createElement("h3");
+            const field5 = document.createElement("h3");
+            const field6 = document.createElement("h3");
+
+            field0.innerText = "Логін: " + data.user.login;
+            field1.innerText = "Ім'я: " + data.user.name;
+            field2.innerText = "Група: " + data.user.group_name;
+            field3.innerText = "Телефон: " + data.user.phone;
+            field4.innerText = "Факультет: " + data.user.faculty;
+            field5.innerText = "Адреса: " + data.user.address;
+
+            const status = document.getElementById("status");
+
+            status.appendChild(field0);
+            status.appendChild(field1);
+
+            if (!isAdmin) {
+                status.appendChild(field2);
+                status.appendChild(field3);
+                status.appendChild(field4);
+                status.appendChild(field5);
+                status.appendChild(field6);
+            }
+
+            if (isAdmin)
+                edit_button.remove();
+        });
+
+        const edit_button = document.getElementById("edit");
+        const logout_button = document.getElementById("logout");
+
+        edit_button.addEventListener("click", e => {
+            location.href = "/edit";
+        });
+
+        logout_button.addEventListener("click", e => {
+            location.href = "/logout";
+        });
+    </script>
+    <style>
+        #id {
+            margin-left: 30%;
+            text-align: center;
+            align-content: center;
+            display:grid;
+            align-self: middle;
+            width: 40%;
+        };
+    </style>
+</html>

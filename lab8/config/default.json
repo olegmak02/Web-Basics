@@ -1,0 +1,11 @@
+{
+    "dbConfig": {
+        "host": "localhost",
+        "port": 5432,
+        "database": "lab8",
+        "user": "postgres",
+        "password": "oleg"
+    },
+    "jwtKey": "some_secret_key",
+    "cookie": "authenticationkey"
+}
